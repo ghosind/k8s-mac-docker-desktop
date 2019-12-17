@@ -1,0 +1,25 @@
+#!/bin/bash
+
+K8S_VERSION=$(kubectl version | cut -d "\"" -f 6)
+
+if [ -z $G $GCR_MIRROR ]
+then
+  GCR_MIRROR=gcr.azk8s.cn/google_containers
+fi
+
+images=(
+  kube-proxy:$K8S_VERSION
+  kube-controller-manager:$K8S_VERSION
+  kube-scheduler:$K8S_VERSION
+  kube-apiserver:$K8S_VERSION
+  coredns:1.6.6
+  pause:3.1
+  etcd:3.3.10
+)
+
+for image in ${images[@]}
+do
+  docker pull $GCR_MIRROR/$image
+  docker tag $GCR_MIRROR/$image k8s.gcr.io/$image
+  docker rmi $GCR_MIRROR/$image
+done
