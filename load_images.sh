@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [ ! -x "$(command -v docker)" ]
+then
+  echo "Docker must be installed."
+  exit 1
+fi
+
 K8S_VERSION=$(kubectl version | cut -d "\"" -f 6)
 
 if [ -z $G $GCR_MIRROR ]
