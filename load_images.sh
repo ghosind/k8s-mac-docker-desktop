@@ -15,21 +15,19 @@ then
   GCR_MIRROR=gcr.azk8s.cn/google_containers
 fi
 
-images=(
-  kube-proxy:$K8S_VERSION
-  kube-controller-manager:$K8S_VERSION
-  kube-scheduler:$K8S_VERSION
-  kube-apiserver:$K8S_VERSION
-  coredns:1.3.1
-  pause:3.1
-  etcd:3.3.10
-)
+file="./images/${K8S_VERSION}.txt"
 
-for image in ${images[@]}
-do
-  docker pull $GCR_MIRROR/$image
-  docker tag $GCR_MIRROR/$image k8s.gcr.io/$image
-  docker rmi $GCR_MIRROR/$image
-done
+if [ -f $file ]
+then
+  while read -r value
+  do
+    docker pull $GCR_MIRROR/$value
+    docker tag $GCR_MIRROR/$value k8s.gcr.io/$value
+    docker rmi $GCR_MIRROR/$value
+  done < "$file"
+else
+  echo "Unknown kubernetes version."
+  exit 1
+fi
 
 exit 0
