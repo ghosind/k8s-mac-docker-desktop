@@ -15,6 +15,11 @@ then
   GCR_MIRROR=gcr.azk8s.cn/google_containers
 fi
 
+if [ -z $G $QUAY_MIRROR ]
+then
+  QUAY_MIRROR=quay.azk8s.cn
+fi
+
 file="./images/${K8S_VERSION}.txt"
 
 if [ -f $file ]
