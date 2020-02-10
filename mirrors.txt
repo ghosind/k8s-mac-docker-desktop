@@ -1,0 +1,1 @@
+GCR=k8s.gcr.io=gcr.azk8s.cn/google_containers
