@@ -1,1 +1,2 @@
 GCR=k8s.gcr.io=gcr.azk8s.cn/google_containers
+QUAY=quay.io=quay.azk8s.cn
