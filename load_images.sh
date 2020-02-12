@@ -5,10 +5,19 @@
 
 set -e
 
+# 加载语言文件
+LANGUAGE=${LANG:0:2}
+if [ -f "/lang/$LANGUAGE.sh" ]
+then
+  source /lang/$LANGUAGE.sh
+else
+  source ./lang/zh.sh
+fi
+
 # 检查Docker是否安装
 if [ ! -x "$(command -v docker)" ]
 then
-  echo "ERR: 必须安装Docker"
+  echo $ERR_DOCKER
   exit 1
 fi
 
@@ -19,7 +28,7 @@ K8S_VERSION=$(kubectl version | cut -d "\"" -f 6 | head -n 1)
 dir="./images/$K8S_VERSION"
 if [ ! -d $dir ]
 then
-  echo "ERR: 未知Kubernetes版本"
+  echo $ERR_K8S_VERSION
   exit 1
 fi
 
@@ -27,7 +36,7 @@ fi
 mirror_file="mirrors.txt"
 if ! [ -f "$mirror_file" ]
 then
-  echo "ERR: 镜像信息文件不存在"
+  echo $ERR_MIRROR_FILE
   exit 1
 fi
 
@@ -50,12 +59,14 @@ do
   then
     while read -r value
     do
+      # 从镜像服务中拉取镜像
       docker pull $mirror_address/$value
+      # 重新tag镜像，并删除镜像服务拉取的镜像
       docker tag $mirror_address/$value $source/$value
       docker rmi $mirror_address/$value
     done < "$file"
   else
-    echo "WARN: 对应镜像文件不存在"
+    echo $WARN_IMAGES_FILE
     continue
   fi
 done < "$mirror_file"
