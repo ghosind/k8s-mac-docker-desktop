@@ -1,0 +1,9 @@
+GCR:etcd-amd64:3.1.12
+GCR:k8s-dns-dnsmasq-nanny-amd64:1.14.8
+GCR:k8s-dns-kube-dns-amd64:1.14.8
+GCR:k8s-dns-sidecar-amd64:1.14.8
+GCR:kube-apiserver-amd64:v1.10.11
+GCR:kube-controller-manager-amd64:v1.10.11
+GCR:kube-proxy-amd64:v1.10.11
+GCR:kube-scheduler-amd64:v1.10.11
+GCR:pause-amd64:3.1
