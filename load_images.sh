@@ -5,6 +5,26 @@
 
 set -e
 
+# 根据文件加载镜像
+function pull_images() {
+  if [ -f $1 ]
+  then
+    while IFS=":" read -r name image version
+    do
+      mirror_name=${name}_MIRROR
+      source_name=${name}_SOURCE
+
+      # 从镜像服务中拉取镜像
+      docker pull ${!mirror_name}/$image:$version
+      # 重新tag镜像，并删除镜像服务拉取的镜像
+      docker tag ${!mirror_name}/$value ${!source_name}/$value
+      docker rmi ${!mirror_name}/$value
+    done < "$1"
+  else
+    echo $WARN_IMAGES_FILE
+  fi
+}
+
 # 加载语言文件
 LANGUAGE=${LANG:0:2}
 if [ -f "/lang/$LANGUAGE.sh" ]
@@ -40,35 +60,19 @@ then
   exit 1
 fi
 
-while IFS="=" read -r name source mirror
+# 加载镜像地址
+while IFS="=" read -r name src mirror
 do
   mirror_name=${name}_MIRROR
-
-  # 根据全局变量获取镜像服务地址
   if [ -z ${!mirror_name} ]
   then
-    # 当全局变量不存在是使用默认的镜像服务地址
-    mirror_address=$mirror
-  else
-    mirror_address=${!mirror_name}
+    export ${name}_MIRROR=$mirror
   fi
 
-  file="$dir/$(tr '[:upper:]' '[:lower:]' <<< $name).txt"
-
-  if [ -f $file ]
-  then
-    while read -r value
-    do
-      # 从镜像服务中拉取镜像
-      docker pull $mirror_address/$value
-      # 重新tag镜像，并删除镜像服务拉取的镜像
-      docker tag $mirror_address/$value $source/$value
-      docker rmi $mirror_address/$value
-    done < "$file"
-  else
-    echo $WARN_IMAGES_FILE
-    continue
-  fi
+  export ${name}_SOURCE=$src
 done < "$mirror_file"
+
+# 加载核心组件
+pull_images "$dir/core.txt"
 
 exit 0
