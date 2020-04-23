@@ -34,6 +34,28 @@ else
   source ./lang/zh.sh
 fi
 
+if [ $# -gt 1 ]
+then
+  echo $ERR_INVALID_PARAMS
+  exit 1
+fi
+
+# 确定加载的镜像类别
+# 默认情况加载核心模块
+module="core"
+if [ $# -eq 1 ]
+then
+  case $1 in
+  core | dashboard )
+    module=$1
+    ;;
+  * )
+    echo "$ERR_UNKNOWN_MODULE $1."
+    exit 1
+    ;;
+  esac
+fi
+
 # 检查Docker是否安装
 if [ ! -x "$(command -v docker)" ]
 then
@@ -72,7 +94,7 @@ do
   export ${name}_SOURCE=$src
 done < "$mirror_file"
 
-# 加载核心组件
-pull_images "$dir/core.txt"
+# 加载指定模块镜像
+pull_images "$dir/$module.txt"
 
 exit 0
