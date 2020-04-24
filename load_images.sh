@@ -49,8 +49,15 @@ then
   core | dashboard )
     module=$1
     ;;
+  -h )
+    echo "$INFO_HELP"
+    exit 0
+    ;;
+  -d )
+    set -x
+    ;;
   * )
-    echo "$ERR_UNKNOWN_MODULE $1."
+    echo "$ERR_BAD_OPTION: $1."
     exit 1
     ;;
   esac
