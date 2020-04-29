@@ -1,2 +1,2 @@
-GCR=k8s.gcr.io=gcr.azk8s.cn/google_containers
-QUAY=quay.io=quay.azk8s.cn
+GCR=k8s.gcr.io=registry.cn-hangzhou.aliyuncs.com/google_containers
+QUAY=quay.io=registry.cn-hangzhou.aliyuncs.com/google_containers
