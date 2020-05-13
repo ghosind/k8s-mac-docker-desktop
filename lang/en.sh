@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # warnings
-WARN_IMAGES_FILE="WARN: The images file is not found."
+export WARN_IMAGES_FILE="WARN: The images file is not found."
 
 # errors
-ERR_INVALID_PARAMS="ERR: Invalid parameters number."
-ERR_BAD_OPTION="ERR: Bad option"
-ERR_DOCKER="ERR: Docker is required."
-ERR_K8S_VERSION="ERR: The Kubernetes version is unsupprt."
-ERR_MIRROR_FILE="ERR: The mirrors file is not found."
+export ERR_INVALID_PARAMS="ERR: Invalid parameters number."
+export ERR_BAD_OPTION="ERR: Bad option"
+export ERR_DOCKER="ERR: Docker is required."
+export ERR_K8S_VERSION="ERR: The Kubernetes version is unsupprt."
+export ERR_MIRROR_FILE="ERR: The mirrors file is not found."
 
 # help
-INFO_HELP="Load Kubernetes images
+export INFO_HELP="Load Kubernetes images
 Usage: ./load_images.sh [core|dashboard|-d|-h]
 
 Options:
