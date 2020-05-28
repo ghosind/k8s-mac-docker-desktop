@@ -12,7 +12,7 @@ export ERR_MIRROR_FILE="ERR: 镜像信息文件不存在"
 
 # 帮助信息
 export INFO_HELP="获取Kubernetes所需镜像
-使用方法: ./load_images.sh [core|dashboard|-d|-h]
+使用方法: ./load_images.sh [core|dashboard|-d|-h|<k8s版本>]
 
 可选项:
 -d Debug模式（显式命令）

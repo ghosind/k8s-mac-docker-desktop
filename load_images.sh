@@ -6,7 +6,7 @@
 set -e
 
 # 根据文件加载镜像
-function pull_images() {
+pull_images() {
   if [ -f "$1" ]
   then
     while IFS=":" read -r name image version
@@ -59,8 +59,7 @@ then
     set -x
     ;;
   * )
-    echo "$ERR_BAD_OPTION: $1."
-    exit 1
+    K8S_VERSION="$1"
     ;;
   esac
 fi
@@ -72,8 +71,11 @@ then
   exit 1
 fi
 
-# 获取Kubernetes版本
-K8S_VERSION=$(kubectl version | cut -d "\"" -f 6 | head -n 1)
+if [ -z "$K8S_VERSION" ]
+then
+  # 获取Kubernetes版本
+  K8S_VERSION=$(kubectl version | cut -d "\"" -f 6 | head -n 1)
+fi
 
 # 检查Kubernetes版本对应的镜像信息是否存在
 dir="./images/$K8S_VERSION"
