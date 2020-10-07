@@ -29,11 +29,11 @@ pull_images() {
 LANGUAGE=${LANG:0:2}
 if [ -f "./lang/$LANGUAGE.sh" ]
 then
-  # shellcheck source=./lang/en.sh
+  # shellcheck disable=SC1090
   source "./lang/$LANGUAGE.sh"
 else
-  # shellcheck source=./lang/zh.sh
-  source ./lang/zh.sh
+  # shellcheck disable=SC1091
+  source "./lang/zh.sh"
 fi
 
 if [ $# -gt 1 ]
@@ -74,7 +74,7 @@ fi
 if [ -z "$K8S_VERSION" ]
 then
   # 获取Kubernetes版本
-  K8S_VERSION=$(kubectl version | cut -d "\"" -f 6 | head -n 1)
+  K8S_VERSION=$(kubectl version 2>/dev/null | cut -d "\"" -f 6 | head -n 1)
 fi
 
 # 检查Kubernetes版本对应的镜像信息是否存在
