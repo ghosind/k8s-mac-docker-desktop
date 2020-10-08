@@ -1,6 +1,7 @@
 # k8s-mac-docker-desktop
 
 ![](https://github.com/ghosind/k8s-mac-docker-desktop/workflows/shellcheck/badge.svg)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1eb7785707d84735bfa16ddd9c49b8f6)](https://www.codacy.com/gh/ghosind/k8s-mac-docker-desktop/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ghosind/k8s-mac-docker-desktop&amp;utm_campaign=Badge_Grade)
 
 针对国内无法直接从k8s.gcr.io上下载Kubernetes所需的镜像导致Docker Desktop for Mac无法开启Kubernets的问题。默认情况下，脚本将从阿里云提供的镜像服务器中下载所需镜像，也可设置`GCR_MIRROR`/`QUAY_MIRROR`变量指定镜像服务器（但注意其需要指定完整的路径，例如使用阿里云的GCR镜像服务，需要设置为`registry.cn-hangzhou.aliyuncs.com/google_containers`）。
 

@@ -11,8 +11,8 @@ pull_images() {
   then
     while IFS=":" read -r name image version
     do
-      mirror_name=${name}_MIRROR
-      source_name=${name}_SOURCE
+      mirror_name="${name}_MIRROR"
+      source_name="${name}_SOURCE"
 
       # 从镜像服务中拉取镜像
       docker pull "${!mirror_name}/$image:$version"
@@ -45,11 +45,11 @@ fi
 # 确定加载的镜像类别
 # 默认情况加载核心模块
 module="core"
-if [ $# -eq 1 ]
+if [ "$#" -eq "1" ]
 then
-  case $1 in
+  case "$1" in
   core | dashboard )
-    module=$1
+    module="$1"
     ;;
   -h )
     echo "$INFO_HELP"
@@ -96,7 +96,7 @@ fi
 # 加载镜像地址
 while IFS="=" read -r name src mirror
 do
-  mirror_name=${name}_MIRROR
+  mirror_name="${name}_MIRROR"
   if [ -z "${!mirror_name}" ]
   then
     export "${name}"_MIRROR="$mirror"
