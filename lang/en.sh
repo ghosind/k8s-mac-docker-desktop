@@ -12,11 +12,12 @@ export ERR_MIRROR_FILE="ERR: The mirrors file is not found."
 
 # help
 export INFO_HELP="Load Kubernetes images
-Usage: ./load_images.sh [core|dashboard|-d|-h|<k8s version>]
+Usage: ./load_images.sh [core|dashboard|-d|-h|-n|<k8s version>]
 
 Options:
 -d: Debug mode (echo commands).
 -h: Print help information.
+-n: Disable default images if version is not found.
 core: Load the images of Kubernetes core components.
 dashboard: Load the images of Kubernetes dashboard.
 

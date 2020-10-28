@@ -14,6 +14,11 @@ pull_images() {
       mirror_name="${name}_MIRROR"
       source_name="${name}_SOURCE"
 
+      if [ "$version" = "K8S_VERSION" ]
+      then
+        version="$K8S_VERSION"
+      fi
+
       # 从镜像服务中拉取镜像
       docker pull "${!mirror_name}/$image:$version"
       # 重新tag镜像，并删除镜像服务拉取的镜像
@@ -45,24 +50,29 @@ fi
 # 确定加载的镜像类别
 # 默认情况加载核心模块
 module="core"
-if [ "$#" -eq "1" ]
-then
+K8S_NO_DEFAULT="false"
+while [ "$#" -gt "0" ]
+do
   case "$1" in
   core | dashboard )
     module="$1"
     ;;
-  -h )
+  -h)
     echo "$INFO_HELP"
     exit 0
     ;;
-  -d )
+  -d)
     set -x
     ;;
-  * )
+  -n)
+    K8S_NO_DEFAULT="true"
+    ;;
+  *)
     K8S_VERSION="$1"
     ;;
   esac
-fi
+  shift
+done
 
 # 检查Docker是否安装
 if [ ! -x "$(command -v docker)" ]
@@ -81,8 +91,12 @@ fi
 dir="./images/$K8S_VERSION"
 if [ ! -d "$dir" ]
 then
-  echo "$ERR_K8S_VERSION"
-  exit 1
+  if [ ! -f "./images/default/$module.txt" ] || [ "$K8S_NO_DEFAULT" = "true" ]
+  then
+    echo "$ERR_K8S_VERSION"
+    exit 1
+  fi
+  dir="./images/default"
 fi
 
 # 检查镜像服务设置文件
@@ -99,10 +113,10 @@ do
   mirror_name="${name}_MIRROR"
   if [ -z "${!mirror_name}" ]
   then
-    export "${name}"_MIRROR="$mirror"
+    "${name}"_MIRROR="$mirror"
   fi
 
-  export "${name}"_SOURCE="$src"
+  "$name"_SOURCE="$src"
 done < "$mirror_file"
 
 # 加载指定模块镜像
