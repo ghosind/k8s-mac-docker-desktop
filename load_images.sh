@@ -113,10 +113,10 @@ do
   mirror_name="${name}_MIRROR"
   if [ -z "${!mirror_name}" ]
   then
-    "${name}"_MIRROR="$mirror"
+    export "${mirror_name}"="${mirror}"
   fi
 
-  "$name"_SOURCE="$src"
+  export "$name"_SOURCE="$src"
 done < "$mirror_file"
 
 # 加载指定模块镜像
