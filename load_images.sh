@@ -3,6 +3,9 @@
 # 根据不同版本自动获取Kubernetes启动所需镜像
 # @author Chen Su <ghosind@gmail.com>
 
+# 确保脚本完整性
+{
+
 set -e
 
 # 根据文件加载镜像
@@ -123,3 +126,5 @@ done < "$mirror_file"
 pull_images "$dir/$module.txt"
 
 exit 0
+
+}
