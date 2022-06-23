@@ -1,4 +1,4 @@
-GCR:coredns:1.8.4
+GCR_COREDNS:coredns:1.8.4
 GCR:etcd:3.5.0-0
 GCR:kube-apiserver:v1.22.5
 GCR:kube-controller-manager:v1.22.5
