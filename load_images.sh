@@ -57,7 +57,7 @@ K8S_NO_DEFAULT="false"
 while [ "$#" -gt "0" ]
 do
   case "$1" in
-  core | dashboard )
+  core | dashboard | ingress )
     module="$1"
     ;;
   -h)
