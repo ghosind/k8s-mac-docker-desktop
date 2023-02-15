@@ -1,0 +1,2 @@
+GCR_INGRESS:controller:v1.2.1
+GCR_INGRESS:ube-webhook-certgen:v1.2.2
