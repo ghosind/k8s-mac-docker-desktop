@@ -1,0 +1,7 @@
+GCR_COREDNS:coredns:1.10.1
+GCR:etcd:3.5.7-0
+GCR:kube-apiserver:v1.27.2
+GCR:kube-controller-manager:v1.27.2
+GCR:kube-proxy:v1.27.2
+GCR:kube-scheduler:v1.27.2
+GCR:pause:3.9
